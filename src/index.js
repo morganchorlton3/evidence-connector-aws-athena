@@ -2,22 +2,39 @@
  * This type describes the options that your connector expects to recieve
  * This could include username + password, host + port, etc
  * @typedef {Object} ConnectorOptions
- * @property {string} SomeOption
+ * @property {string} database
+ * @property {string} outputBucket
+ * @property {string} testTableName
  */
 
 import { EvidenceType } from "@evidence-dev/db-commons";
+import { AthenaClient, GetQueryExecutionCommand, GetQueryResultsCommand, StartQueryExecutionCommand } from "@aws-sdk/client-athena";
+
+const client = new AthenaClient();
 
 /**
  * @see https://docs.evidence.dev/plugins/creating-a-plugin/datasources#options-specification
  * @see https://github.com/evidence-dev/evidence/blob/main/packages/postgres/index.cjs#L316
  */
 export const options = {
-  SomeOption: {
-    title: "Some Option",
+  database: {
+    title: "database",
     description:
-      "This object defines how SomeOption should be displayed and configured in the Settings UI",
-    type: "string", // options: 'string' | 'number' | 'boolean' | 'select' | 'file'
+      "AWS glue database to query",
+    type: "string",
   },
+  outputBucket: {
+    title: "output_bucket",
+    description:
+      "AWS S3 Output bucket name for athena query",
+    type: "string",
+  },
+  testTableName: {
+    title: "test_table_name",
+    description:
+      "Name of a athena table name to do a test query (select first row) to validate the connection",
+    type: "string",
+  }
 };
 
 /**
@@ -31,8 +48,6 @@ export const options = {
  * @type {import("@evidence-dev/db-commons").GetRunner<ConnectorOptions>}
  */
 export const getRunner = (options) => {
-  console.debug(`SomeOption = ${options.SomeOption}`);
-
   // This function will be called for EVERY file in the sources directory
   // If you are expecting a specific file type (e.g. SQL files), make sure to filter
   // to exclude others.
@@ -65,38 +80,34 @@ export const getRunner = (options) => {
   };
 };
 
-// Uncomment to use the advanced source interface
-// This uses the `yield` keyword, and returns the same type as getRunner, but with an added `name` and `content` field (content is used for caching)
-// sourceFiles provides an easy way to read the source directory to check for / iterate through files
-// /** @type {import("@evidence-dev/db-commons").ProcessSource<ConnectorOptions>} */
-// export async function* processSource(options, sourceFiles, utilFuncs) {
-//   yield {
-//     title: "some_demo_table",
-//     content: "SELECT * FROM some_demo_table", // This is ONLY used for caching
-//     rows: [], // rows can be an array
-//     columnTypes: [
-//       {
-//         name: "someInt",
-//         evidenceType: EvidenceType.NUMBER,
-//         typeFidelity: "inferred",
-//       },
-//     ],
-//   };
-//   yield {
-//     title: "some_demo_table",
-//     content: "SELECT * FROM some_demo_table", // This is ONLY used for caching
-//     rows: async function* () {}, // rows can be a generator function for returning batches of results (e.g. if an API is paginated, or database supports cursors)
-//     columnTypes: [
-//       {
-//         name: "someInt",
-//         evidenceType: EvidenceType.NUMBER,
-//         typeFidelity: "inferred",
-//       },
-//     ],
-//   };
+async function waitForQueryCompletion(queryExecutionId) {
+  while (true) {
+    
+    const command = new GetQueryExecutionCommand({ QueryExecutionId: queryExecutionId });
+    const result = await client.send(command);
+    const status = result.QueryExecution.Status.State;
 
-//  throw new Error("Process Source has not yet been implemented");
-// }
+    if (status === 'SUCCEEDED') {
+      break;
+    } else if (status === 'FAILED' || status === 'CANCELLED') {
+      throw new Error(`Query execution failed or was cancelled: ${queryExecutionId}`);
+    }
+
+    // Sleep for a few seconds before checking again
+    await new Promise(resolve => setTimeout(resolve, 5000));
+  }
+}
+
+async function getQueryResults(queryExecutionId) {
+  const params = {
+    QueryExecutionId: queryExecutionId
+  };
+
+  const command = new GetQueryResultsCommand(params);
+  const result = await client.send(command);
+
+  return result;
+}
 
 /**
  * Implementing this function creates an "advanced" connector
@@ -107,6 +118,33 @@ export const getRunner = (options) => {
  */
 
 /** @type {import("@evidence-dev/db-commons").ConnectionTester<ConnectorOptions>} */
-export const testConnection = async (opts) => {
-  throw new Error("Connection test has not yet been implemented");
+export const testConnection = async (options) => {
+  const query = `SELECT * FROM ${options.testTableName} LIMIT 1`;
+
+  // Define parameters for query execution
+  const params = {
+    QueryString: query,
+    QueryExecutionContext: {
+      Database: options.database
+    },
+    ResultConfiguration: {
+      OutputLocation: 's3://' + options.outputBucket
+    }
+  };
+
+  try {
+    // Execute the query
+    const command = new StartQueryExecutionCommand(params);
+    const response = await client.send(command);
+    const queryExecutionId = response.QueryExecutionId;
+
+    // Wait for query to complete
+    await waitForQueryCompletion(queryExecutionId);
+
+    console.log('Connection to table is working.');
+    return true;
+  } catch (error) {
+    console.error('Error validating table connection:', error);
+    return false;
+  };
 };

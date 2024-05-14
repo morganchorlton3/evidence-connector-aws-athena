@@ -23,6 +23,7 @@
     "vitest": "^1.2.0"
   },
   "dependencies": {
+    "@aws-sdk/client-athena": "^3.575.0",
     "@evidence-dev/db-commons": "^1.0.1"
   },
   "evidence": {
