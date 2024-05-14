@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.0.1...v1.1.0) (2024-05-14)
+
+
+### Features
+
+* Added ability to query athena database ([3fb49ab](https://github.com/morganchorlton3/evidence-connector-aws-athena/commit/3fb49ab9f2ff41c7299f04bfd3bb8e3c929dac33))
+
 ## [1.0.1](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.0.0...v1.0.1) (2024-05-14)
 
 
