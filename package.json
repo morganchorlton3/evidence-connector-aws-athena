@@ -1,7 +1,11 @@
 {
-  "name": "evidence-connector-my-datasource",
+  "name": "evidence-connector-aws-athena",
   "version": "1.0.0",
-  "description": "",
+  "description": "Evidence.dev AWS Athena data source",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/morganchorlton3/evidence-connector-aws-athena"
+  },
   "main": "src/index.js",
   "type": "module",
   "scripts": {
