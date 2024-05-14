@@ -12,10 +12,13 @@
     "test": "vitest --run",
     "check": "tsc --noEmit -p tsconfig.json"
   },
-  "author": "",
+  "author": "morganchorlton3@gmail.com",
   "license": "ISC",
   "devDependencies": {
     "@evidence-dev/plugin-connector": "^2.0.4",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^23.1.1",
     "typescript": "^5.3.3",
     "vitest": "^1.2.0"
   },
@@ -23,10 +26,14 @@
     "@evidence-dev/db-commons": "^1.0.1"
   },
   "evidence": {
-    "datasources": []
+    "datasources": [
+      "athena"
+    ]
   },
   "keywords": [
     "evidence",
-    "evidence-datasource"
+    "evidence-datasource",
+    "athena",
+    "aws"
   ]
 }
