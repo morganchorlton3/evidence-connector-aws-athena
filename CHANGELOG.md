@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.0.0...v1.0.1) (2024-05-14)
+
+
+### Bug Fixes
+
+* updated git repo in package.json ([a1adac3](https://github.com/morganchorlton3/evidence-connector-aws-athena/commit/a1adac3a07c54c10b297c7a8eb07ebe6453b5790))
+
 # 1.0.0 (2024-05-14)
 
 
