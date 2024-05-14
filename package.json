@@ -4,7 +4,7 @@
   "description": "Evidence.dev AWS Athena data source",
   "repository": {
     "type": "git",
-    "url": "https://github.com/morganchorlton3/evidence-connector-aws-athena"
+    "url": "git+https://github.com/morganchorlton3/evidence-connector-aws-athena.git"
   },
   "main": "src/index.js",
   "type": "module",
