@@ -37,49 +37,6 @@ export const options = {
   }
 };
 
-/**
- * Implementing this function creates a "simple" connector
- *
- * Each file in the source directory will be passed to this function, and it will return
- * either an array, or an async generator {@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function*}
- * that contains the query results
- *
- * @see https://docs.evidence.dev/plugins/creating-a-plugin/datasources#simple-interface-arrays
- * @type {import("@evidence-dev/db-commons").GetRunner<ConnectorOptions>}
- */
-export const getRunner = (options) => {
-  // This function will be called for EVERY file in the sources directory
-  // If you are expecting a specific file type (e.g. SQL files), make sure to filter
-  // to exclude others.
-
-  // If you are using some local database file (e.g. a sqlite or duckdb file)
-  // You may also need to filter that file out as well
-  return async (queryText, queryPath) => {
-    // Example output
-    const output = {
-      rows: [
-        { someInt: 1, someString: "string" },
-        { someInt: 2, someString: "string2" },
-      ],
-      columnTypes: [
-        {
-          name: "someInt",
-          evidenceType: EvidenceType.NUMBER,
-          typeFidelity: "inferred",
-        },
-        {
-          name: "someString",
-          evidenceType: EvidenceType.STRING,
-          typeFidelity: "inferred",
-        },
-      ],
-      expectedRowCount: 2,
-    };
-
-    throw new Error("Query Runner has not yet been implemented");
-  };
-};
-
 async function waitForQueryCompletion(queryExecutionId) {
   while (true) {
     
@@ -108,6 +65,105 @@ async function getQueryResults(queryExecutionId) {
 
   return result;
 }
+
+const mapAthenaTypeToEvidenceType = athenaType => {
+  switch (athenaType) {
+    case 'boolean':
+      return EvidenceType.BOOLEAN;
+    case 'tinyint':
+    case 'smallint':
+    case 'int':
+    case 'integer':
+    case 'bigint':
+    case 'double':
+    case 'float':
+    case 'real':
+      return EvidenceType.NUMBER;
+    case 'date':
+    case 'timestamp':
+      return EvidenceType.DATE;
+    case 'string':
+    case 'char':
+    case 'varchar':
+      return EvidenceType.STRING;
+    default:
+      return EvidenceType.STRING; // Default to string if the type is unknown
+  }
+};
+
+// Function to map query results to the specified format
+function mapQueryResults(queryResults) {
+  const columns = queryResults.ResultSet.ResultSetMetadata.ColumnInfo;
+  const rows = queryResults.ResultSet.Rows.slice(1); // Exclude header row
+
+  const mappedRows = rows.map(row => {
+    const mappedRow = {};
+    row.Data.forEach((data, index) => {
+      const columnName = columns[index].Name;
+      mappedRow[columnName] = data.VarCharValue; // Assuming all data types are strings for simplicity
+    });
+    return mappedRow;
+  });
+
+  const columnTypes = columns.map(column => ({
+    name: column.Name,
+    evidenceType: mapAthenaTypeToEvidenceType(column.Type),
+    typeFidelity: 'inferred'
+  }));
+
+  const output = {
+    rows: mappedRows,
+    columnTypes: columnTypes,
+    expectedRowCount: mappedRows.length
+  };
+
+  return output;
+}
+
+/**
+ * Implementing this function creates a "simple" connector
+ *
+ * Each file in the source directory will be passed to this function, and it will return
+ * either an array, or an async generator {@see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function*}
+ * that contains the query results
+ *
+ * @see https://docs.evidence.dev/plugins/creating-a-plugin/datasources#simple-interface-arrays
+ * @type {import("@evidence-dev/db-commons").GetRunner<ConnectorOptions>}
+ */
+export const getRunner = (options) => {
+  return async (queryText, queryPath) => {
+    console.log(queryText);
+    const params = {
+      QueryString: queryText,
+      QueryExecutionContext: {
+        Database: options.database
+      },
+      ResultConfiguration: {
+        OutputLocation: 's3://' + options.outputBucket
+      }
+    };
+
+    try {
+      const command = new StartQueryExecutionCommand(params);
+      const response = await client.send(command);
+      const queryExecutionId = response.QueryExecutionId;
+
+      // Wait for query to complete
+      await waitForQueryCompletion(queryExecutionId);
+
+      const queryResults = await getQueryResults(queryExecutionId);
+
+      // Map the query results to the desired format
+      const output = mapQueryResults(queryResults);
+
+      console.log('Query execution completed successfully');
+      console.log('Output:', output);
+      return output
+    } catch (error) {
+      console.error('Error executing query:', error);
+    }
+  };
+};
 
 /**
  * Implementing this function creates an "advanced" connector
