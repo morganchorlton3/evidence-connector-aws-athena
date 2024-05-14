@@ -1,0 +1,28 @@
+{
+  "name": "evidence-connector-my-datasource",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest --run",
+    "check": "tsc --noEmit -p tsconfig.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@evidence-dev/plugin-connector": "^2.0.4",
+    "typescript": "^5.3.3",
+    "vitest": "^1.2.0"
+  },
+  "dependencies": {
+    "@evidence-dev/db-commons": "^1.0.1"
+  },
+  "evidence": {
+    "datasources": []
+  },
+  "keywords": [
+    "evidence",
+    "evidence-datasource"
+  ]
+}
