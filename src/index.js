@@ -7,8 +7,8 @@
  * @property {string} testTableName
  */
 
-import { EvidenceType } from "@evidence-dev/db-commons";
 import { AthenaClient, GetQueryExecutionCommand, GetQueryResultsCommand, StartQueryExecutionCommand } from "@aws-sdk/client-athena";
+import { EvidenceType } from "@evidence-dev/db-commons";
 
 const client = new AthenaClient();
 
@@ -59,12 +59,33 @@ async function getQueryResults(queryExecutionId) {
   const params = {
     QueryExecutionId: queryExecutionId
   };
+  
+  let allRows = [];
+  let nextToken = null;
+  let resultSetMetadata = null;
 
-  const command = new GetQueryResultsCommand(params);
-  const result = await client.send(command);
+  do {
+    if (nextToken) {
+      params.NextToken = nextToken;
+    }
 
-  return result;
+    const command = new GetQueryResultsCommand(params);
+    const response = await client.send(command);
+
+    if (!resultSetMetadata) {
+      resultSetMetadata = response.ResultSet.ResultSetMetadata;
+    }
+
+    allRows = allRows.concat(response.ResultSet.Rows);
+    nextToken = response.NextToken;
+  } while (nextToken);
+
+  return {
+    rows: allRows,
+    resultSetMetadata: resultSetMetadata
+  };
 }
+
 
 const mapAthenaTypeToEvidenceType = athenaType => {
   switch (athenaType) {
@@ -93,8 +114,8 @@ const mapAthenaTypeToEvidenceType = athenaType => {
 
 // Function to map query results to the specified format
 function mapQueryResults(queryResults) {
-  const columns = queryResults.ResultSet.ResultSetMetadata.ColumnInfo;
-  const rows = queryResults.ResultSet.Rows.slice(1); // Exclude header row
+  const columns = queryResults.resultSetMetadata.ColumnInfo;
+  const rows = queryResults.rows.slice(1); // Exclude header row
 
   const mappedRows = rows.map(row => {
     const mappedRow = {};
