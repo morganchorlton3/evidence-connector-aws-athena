@@ -59,9 +59,21 @@ async function getQueryResults(queryExecutionId) {
   const params = {
     QueryExecutionId: queryExecutionId
   };
+  
+  let result = [];
+  let nextToken = null;
 
-  const command = new GetQueryResultsCommand(params);
-  const result = await client.send(command);
+  do {
+    if (nextToken) {
+      params.NextToken = nextToken;
+    }
+
+    const command = new GetQueryResultsCommand(params);
+    const response = await client.send(command);
+
+    result = result.concat(response.ResultSet.Rows);
+    nextToken = response.NextToken;
+  } while (nextToken);
 
   return result;
 }
