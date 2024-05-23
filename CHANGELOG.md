@@ -1,3 +1,11 @@
+## [1.1.1](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.1.0...v1.1.1) (2024-05-23)
+
+
+### Bug Fixes
+
+* updated metadata return type for row mapping ([f2d8238](https://github.com/morganchorlton3/evidence-connector-aws-athena/commit/f2d8238232574d9b6ed092141d2844ce1629f6b0))
+* updated query results to return all rows, and not stop at 1000 items ([4acf3a5](https://github.com/morganchorlton3/evidence-connector-aws-athena/commit/4acf3a561bee5572f9caf53cbf97cf52dcf4098f))
+
 # [1.1.0](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.0.1...v1.1.0) (2024-05-14)
 
 
