@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.1.1...v1.1.2) (2024-05-24)
+
+
+### Bug Fixes
+
+* updated column type mapping, and updated TypeFidelity ([a8b81b8](https://github.com/morganchorlton3/evidence-connector-aws-athena/commit/a8b81b8f01bf26cba334ebd147d4cf3dfc379842))
+
 ## [1.1.1](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.1.0...v1.1.1) (2024-05-23)
 
 
