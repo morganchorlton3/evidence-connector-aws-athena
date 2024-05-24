@@ -88,7 +88,6 @@ async function getQueryResults(queryExecutionId) {
 
 
 const mapAthenaTypeToEvidenceType = column => {
-  console.log(column)
   let type;
   switch (column.Type) {
     case 'boolean':
@@ -174,7 +173,6 @@ export const getRunner = (options) => {
 
       // Map the query results to the desired format
       const output = mapQueryResults(queryResults);
-      console.log(output)
       return output
     } catch (error) {
       console.error('Error executing query:', error);
@@ -214,7 +212,6 @@ export const testConnection = async (options) => {
     // Wait for query to complete
     await waitForQueryCompletion(queryExecutionId);
 
-    console.log('Connection to table is working.');
     return true;
   } catch (error) {
     console.error('Error validating table connection:', error);
