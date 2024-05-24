@@ -8,7 +8,7 @@
  */
 
 import { AthenaClient, GetQueryExecutionCommand, GetQueryResultsCommand, StartQueryExecutionCommand } from "@aws-sdk/client-athena";
-import { EvidenceType } from "@evidence-dev/db-commons";
+import { EvidenceType, TypeFidelity } from "@evidence-dev/db-commons";
 
 const client = new AthenaClient();
 
@@ -87,10 +87,11 @@ async function getQueryResults(queryExecutionId) {
 }
 
 
-const mapAthenaTypeToEvidenceType = athenaType => {
-  switch (athenaType) {
+const mapAthenaTypeToEvidenceType = column => {
+  let type;
+  switch (column.Type) {
     case 'boolean':
-      return EvidenceType.BOOLEAN;
+      type = EvidenceType.BOOLEAN;
     case 'tinyint':
     case 'smallint':
     case 'int':
@@ -99,17 +100,18 @@ const mapAthenaTypeToEvidenceType = athenaType => {
     case 'double':
     case 'float':
     case 'real':
-      return EvidenceType.NUMBER;
+      type = EvidenceType.NUMBER;
     case 'date':
     case 'timestamp':
-      return EvidenceType.DATE;
+      type = EvidenceType.DATE;
     case 'string':
     case 'char':
     case 'varchar':
-      return EvidenceType.STRING;
+      type = EvidenceType.STRING;
     default:
-      return EvidenceType.STRING; // Default to string if the type is unknown
+      type = EvidenceType.STRING; // Default to string if the type is unknown
   }
+  return { name: column.Name, evidenceType: type, typeFidelity: TypeFidelity.PRECISE }
 };
 
 // Function to map query results to the specified format
@@ -126,11 +128,7 @@ function mapQueryResults(queryResults) {
     return mappedRow;
   });
 
-  const columnTypes = columns.map(column => ({
-    name: column.Name,
-    evidenceType: mapAthenaTypeToEvidenceType(column.Type),
-    typeFidelity: 'inferred'
-  }));
+  const columnTypes = columns.map(column =>  mapAthenaTypeToEvidenceType(column));
 
   const output = {
     rows: mappedRows,
@@ -153,7 +151,6 @@ function mapQueryResults(queryResults) {
  */
 export const getRunner = (options) => {
   return async (queryText, queryPath) => {
-    console.log(queryText);
     const params = {
       QueryString: queryText,
       QueryExecutionContext: {
@@ -176,9 +173,6 @@ export const getRunner = (options) => {
 
       // Map the query results to the desired format
       const output = mapQueryResults(queryResults);
-
-      console.log('Query execution completed successfully');
-      console.log('Output:', output);
       return output
     } catch (error) {
       console.error('Error executing query:', error);
@@ -218,7 +212,6 @@ export const testConnection = async (options) => {
     // Wait for query to complete
     await waitForQueryCompletion(queryExecutionId);
 
-    console.log('Connection to table is working.');
     return true;
   } catch (error) {
     console.error('Error validating table connection:', error);
