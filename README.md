@@ -31,20 +31,17 @@ options:
   testTableName: {testTableName}
 ```
 
-
-
 Open the [schema explorer](http://localhost:3000/explore/schema) to see the new tables imported.
 
 For more information see the [Evidence.dev datasource docs](https://docs.evidence.dev/core-concepts/data-sources/)
 
-
-## Configuration 
+## Configuration
 
 | Field         | Description                                                                                  | Type   |
 |---------------|----------------------------------------------------------------------------------------------|--------|
 | database      | AWS glue database to query                                                                   | string |
+| catalog       | AWS Athena catalog to use for the query, defaults to AWSDataCatalog                          | string |
 | outputBucket  | AWS S3 Output bucket name for athena query                                                   | string |
-| testTableName | Name of a athena table name to do a test query (select first row) to validate the connection | string |
-
+| testTableName | Name of a athena table name to do a test query (select first row) to validate the connection  | string |
 
 ## Source Configuration
