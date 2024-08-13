@@ -3,6 +3,7 @@
  * This could include username + password, host + port, etc
  * @typedef {Object} ConnectorOptions
  * @property {string} database
+ * @property {string} catalog
  * @property {string} outputBucket
  * @property {string} testTableName
  */
@@ -12,16 +13,19 @@ import { EvidenceType, TypeFidelity } from "@evidence-dev/db-commons";
 
 const client = new AthenaClient();
 
-/**
- * @see https://docs.evidence.dev/plugins/creating-a-plugin/datasources#options-specification
- * @see https://github.com/evidence-dev/evidence/blob/main/packages/postgres/index.cjs#L316
- */
 export const options = {
   database: {
     title: "database",
     description:
       "AWS glue database to query",
     type: "string",
+  },
+  catalog: {
+    title: "catalog",
+    description:
+      "AWS Athena catalog to use for the query, defaults to AWSDataCatalog",
+    type: "string",
+    default: "AWSDataCatalog"
   },
   outputBucket: {
     title: "output_bucket",
@@ -151,10 +155,12 @@ function mapQueryResults(queryResults) {
  */
 export const getRunner = (options) => {
   return async (queryText, queryPath) => {
+    console.log(queryPath)
     const params = {
       QueryString: queryText,
       QueryExecutionContext: {
-        Database: options.database
+        Database: options.database,
+        Catalog: options.catalog,
       },
       ResultConfiguration: {
         OutputLocation: 's3://' + options.outputBucket
@@ -190,13 +196,14 @@ export const getRunner = (options) => {
 
 /** @type {import("@evidence-dev/db-commons").ConnectionTester<ConnectorOptions>} */
 export const testConnection = async (options) => {
-  const query = `SELECT * FROM ${options.testTableName} LIMIT 1`;
+  const query = `SELECT * FROM "${options.testTableName}" LIMIT 1`;
 
   // Define parameters for query execution
   const params = {
     QueryString: query,
     QueryExecutionContext: {
-      Database: options.database
+      Database: options.database,
+      Catalog: options.catalog,
     },
     ResultConfiguration: {
       OutputLocation: 's3://' + options.outputBucket
