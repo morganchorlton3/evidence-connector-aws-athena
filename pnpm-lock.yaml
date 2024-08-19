@@ -17,7 +17,7 @@ importers:
     devDependencies:
       '@evidence-dev/plugin-connector':
         specifier: ^2.0.4
-        version: 2.1.7(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)
+        version: 2.1.8(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)
       '@semantic-release/changelog':
         specifier: ^6.0.3
         version: 6.0.3(semantic-release@24.1.0(typescript@5.5.4))
@@ -324,15 +324,15 @@ packages:
   '@evidence-dev/db-commons@1.0.5':
     resolution: {integrity: sha512-/QpzkkIXo7/Ev5YQ5oDjqtZY2e047zkfjt7bvVoFLAXF51hs+sbc3+yK7mhZWZEq/WOgnj2A3XFfRGBED7HcdA==}
 
-  '@evidence-dev/plugin-connector@2.1.7':
-    resolution: {integrity: sha512-adQvkT3gwNuSThsIPppgb0rSg/CYtkLAXSIPPZqWSK7+yz5uBjNRfW6qGYkK07XINJDwO4IMyTWvjahsjB0KSw==}
+  '@evidence-dev/plugin-connector@2.1.8':
+    resolution: {integrity: sha512-m52ERxxbfZjT0QD4xQ7fQZDFvfnZ9pRFFfFdMwr+ySImd1UPaNTFXM7xLvZibUjWd6X4RSNTC8Ll6C74A/s1tg==}
     hasBin: true
 
   '@evidence-dev/telemetry@2.1.2':
     resolution: {integrity: sha512-mKjZf6vWarth+0VXsnLiXghIR/0wUFiCDYcKAQh/HAuf+g/d47FF0dtBS52sct2r49noRftN5IatYDn9b5PmcA==}
 
-  '@evidence-dev/universal-sql@2.1.3':
-    resolution: {integrity: sha512-8IisFYtA99HMxkmupSRvJcBujsImO4g2OJT+4AKvA+CF3IbXTR8SfBuN+eBxn55RA6rGRoL2Roft4rHxKd0Kdw==}
+  '@evidence-dev/universal-sql@2.1.4':
+    resolution: {integrity: sha512-GIjBkmz21at85oQMd9YgsRe43A+6x7iAcmkGfnoAF2NW+2NCsN2E7dwQ4xXyaVxYHA08y31Y0NSIUJCZqaORlg==}
 
   '@fastify/busboy@2.1.0':
     resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
@@ -349,9 +349,6 @@ packages:
   '@jridgewell/set-array@1.2.1':
     resolution: {integrity: sha512-R8gLRTZeyp03ymzP/6Lil/28tGeGEzhx1q2k703KGWRAI1VdvPIXdG70VJc2pAMw3NA6JKL5hhFu1sJX0Mnn/A==}
     engines: {node: '>=6.0.0'}
-
-  '@jridgewell/sourcemap-codec@1.4.15':
-    resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
 
   '@jridgewell/sourcemap-codec@1.5.0':
     resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
@@ -1636,10 +1633,6 @@ packages:
 
   magic-string@0.30.11:
     resolution: {integrity: sha512-+Wri9p0QHMy+545hKww7YAu5NyzF8iomPL/RQazugQ9+Ez4Ic3mERMd8ZTX5rfK944j+560ZJi8iAwgak1Ac7A==}
-
-  magic-string@0.30.5:
-    resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}
-    engines: {node: '>=12'}
 
   marked-terminal@7.1.0:
     resolution: {integrity: sha512-+pvwa14KZL74MVXjYdPR3nSInhGhNvPce/3mqLVZT2oUvt654sL1XImFuLZ1pkA866IYZ3ikDTOFUIC7XzpZZg==}
@@ -3068,11 +3061,11 @@ snapshots:
     dependencies:
       fs-extra: 11.2.0
 
-  '@evidence-dev/plugin-connector@2.1.7(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)':
+  '@evidence-dev/plugin-connector@2.1.8(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)':
     dependencies:
       '@evidence-dev/db-commons': 1.0.5
       '@evidence-dev/telemetry': 2.1.2(encoding@0.1.13)
-      '@evidence-dev/universal-sql': 2.1.3
+      '@evidence-dev/universal-sql': 2.1.4
       chalk: 5.3.0
       chokidar: 3.6.0
       listr2: 7.0.2
@@ -3111,7 +3104,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@evidence-dev/universal-sql@2.1.3':
+  '@evidence-dev/universal-sql@2.1.4':
     dependencies:
       '@duckdb/duckdb-wasm': 1.28.0
       apache-arrow: 13.0.0
@@ -3126,21 +3119,19 @@ snapshots:
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
       '@jridgewell/set-array': 1.2.1
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
       '@jridgewell/trace-mapping': 0.3.25
 
   '@jridgewell/resolve-uri@3.1.2': {}
 
   '@jridgewell/set-array@1.2.1': {}
 
-  '@jridgewell/sourcemap-codec@1.4.15': {}
-
   '@jridgewell/sourcemap-codec@1.5.0': {}
 
   '@jridgewell/trace-mapping@0.3.25':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
 
   '@lukeed/csprng@1.1.0': {}
 
@@ -3984,7 +3975,7 @@ snapshots:
 
   code-red@1.0.4:
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
       '@types/estree': 1.0.5
       acorn: 8.11.3
       estree-walker: 3.0.3
@@ -4582,10 +4573,6 @@ snapshots:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  magic-string@0.30.5:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
-
   marked-terminal@7.1.0(marked@12.0.2):
     dependencies:
       ansi-escapes: 7.0.0
@@ -5013,7 +5000,7 @@ snapshots:
 
   sorcery@0.11.0:
     dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
       buffer-crc32: 0.2.13
       minimist: 1.2.8
       sander: 0.5.1
@@ -5135,7 +5122,7 @@ snapshots:
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
-      magic-string: 0.30.5
+      magic-string: 0.30.11
       sorcery: 0.11.0
       strip-indent: 3.0.0
       svelte: 4.2.12
@@ -5146,7 +5133,7 @@ snapshots:
   svelte@4.2.12:
     dependencies:
       '@ampproject/remapping': 2.3.0
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
       '@jridgewell/trace-mapping': 0.3.25
       '@types/estree': 1.0.5
       acorn: 8.11.3
@@ -5157,7 +5144,7 @@ snapshots:
       estree-walker: 3.0.3
       is-reference: 3.0.2
       locate-character: 3.0.0
-      magic-string: 0.30.5
+      magic-string: 0.30.11
       periscopic: 3.1.0
 
   sveltekit-autoimport@1.8.0(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2))):
