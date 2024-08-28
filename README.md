@@ -37,11 +37,12 @@ For more information see the [Evidence.dev datasource docs](https://docs.evidenc
 
 ## Configuration
 
-| Field         | Description                                                                                  | Type   |
-|---------------|----------------------------------------------------------------------------------------------|--------|
-| database      | AWS glue database to query                                                                   | string |
-| catalog       | AWS Athena catalog to use for the query, defaults to AWSDataCatalog                          | string |
-| outputBucket  | AWS S3 Output bucket name for athena query                                                   | string |
+| Field         | Description                                                                                   | Type   |
+|---------------|-----------------------------------------------------------------------------------------------|--------|
+| database      | AWS glue database to query                                                                    | string |
+| catalog       | AWS Athena catalog to use for the query, defaults to AWSDataCatalog                           | string |
+| workgroup     | AWS Athena workgroup to use for the query, defaults to primary                                | string |
+| outputBucket  | AWS S3 Output bucket name for athena query                                                    | string |
 | testTableName | Name of a athena table name to do a test query (select first row) to validate the connection  | string |
 
 ## Source Configuration
