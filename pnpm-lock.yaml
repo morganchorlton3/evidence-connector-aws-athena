@@ -17,7 +17,7 @@ importers:
     devDependencies:
       '@evidence-dev/plugin-connector':
         specifier: ^2.0.4
-        version: 2.1.8(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)
+        version: 2.1.9(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)
       '@semantic-release/changelog':
         specifier: ^6.0.3
         version: 6.0.3(semantic-release@24.1.0(typescript@5.5.4))
@@ -324,15 +324,15 @@ packages:
   '@evidence-dev/db-commons@1.0.5':
     resolution: {integrity: sha512-/QpzkkIXo7/Ev5YQ5oDjqtZY2e047zkfjt7bvVoFLAXF51hs+sbc3+yK7mhZWZEq/WOgnj2A3XFfRGBED7HcdA==}
 
-  '@evidence-dev/plugin-connector@2.1.8':
-    resolution: {integrity: sha512-m52ERxxbfZjT0QD4xQ7fQZDFvfnZ9pRFFfFdMwr+ySImd1UPaNTFXM7xLvZibUjWd6X4RSNTC8Ll6C74A/s1tg==}
+  '@evidence-dev/plugin-connector@2.1.9':
+    resolution: {integrity: sha512-il5sZJkYl/74YEROxORSO4v5hc6xTntMSFeOBY/tsq7zYEVQ61pAjwrxG3rPq2wIwDryRdPPir/2lOjUFs+sjw==}
     hasBin: true
 
   '@evidence-dev/telemetry@2.1.2':
     resolution: {integrity: sha512-mKjZf6vWarth+0VXsnLiXghIR/0wUFiCDYcKAQh/HAuf+g/d47FF0dtBS52sct2r49noRftN5IatYDn9b5PmcA==}
 
-  '@evidence-dev/universal-sql@2.1.4':
-    resolution: {integrity: sha512-GIjBkmz21at85oQMd9YgsRe43A+6x7iAcmkGfnoAF2NW+2NCsN2E7dwQ4xXyaVxYHA08y31Y0NSIUJCZqaORlg==}
+  '@evidence-dev/universal-sql@2.1.5':
+    resolution: {integrity: sha512-YVd7y/6cLCeiIZCC+42f0kfZhwZN8GyeodsC3RVetz00G3zoyipUccqIn8734N3Mmd7yd8WpwIS5H9cEni5xxw==}
 
   '@fastify/busboy@2.1.0':
     resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
@@ -3061,11 +3061,11 @@ snapshots:
     dependencies:
       fs-extra: 11.2.0
 
-  '@evidence-dev/plugin-connector@2.1.8(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)':
+  '@evidence-dev/plugin-connector@2.1.9(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)':
     dependencies:
       '@evidence-dev/db-commons': 1.0.5
       '@evidence-dev/telemetry': 2.1.2(encoding@0.1.13)
-      '@evidence-dev/universal-sql': 2.1.4
+      '@evidence-dev/universal-sql': 2.1.5
       chalk: 5.3.0
       chokidar: 3.6.0
       listr2: 7.0.2
@@ -3104,7 +3104,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@evidence-dev/universal-sql@2.1.4':
+  '@evidence-dev/universal-sql@2.1.5':
     dependencies:
       '@duckdb/duckdb-wasm': 1.28.0
       apache-arrow: 13.0.0
