@@ -17,7 +17,7 @@ importers:
     devDependencies:
       '@evidence-dev/plugin-connector':
         specifier: ^2.0.4
-        version: 2.1.9(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)
+        version: 2.1.10(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)
       '@semantic-release/changelog':
         specifier: ^6.0.3
         version: 6.0.3(semantic-release@24.1.0(typescript@5.5.4))
@@ -324,8 +324,8 @@ packages:
   '@evidence-dev/db-commons@1.0.5':
     resolution: {integrity: sha512-/QpzkkIXo7/Ev5YQ5oDjqtZY2e047zkfjt7bvVoFLAXF51hs+sbc3+yK7mhZWZEq/WOgnj2A3XFfRGBED7HcdA==}
 
-  '@evidence-dev/plugin-connector@2.1.9':
-    resolution: {integrity: sha512-il5sZJkYl/74YEROxORSO4v5hc6xTntMSFeOBY/tsq7zYEVQ61pAjwrxG3rPq2wIwDryRdPPir/2lOjUFs+sjw==}
+  '@evidence-dev/plugin-connector@2.1.10':
+    resolution: {integrity: sha512-nQlPdCFt6EAhM+U7nXSd6LrvWCZN3la0qYWU8jfwj1Jt9NHrjDMqHxNHxHf7BcAgt8oOrw8h045SDDvIUFwozg==}
     hasBin: true
 
   '@evidence-dev/telemetry@2.1.2':
@@ -3061,7 +3061,7 @@ snapshots:
     dependencies:
       fs-extra: 11.2.0
 
-  '@evidence-dev/plugin-connector@2.1.9(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)':
+  '@evidence-dev/plugin-connector@2.1.10(@sveltejs/kit@1.30.3(svelte@4.2.12)(vite@5.2.10(@types/node@20.11.2)))(@types/node@20.11.2)(encoding@0.1.13)(postcss@8.4.41)(typescript@5.5.4)':
     dependencies:
       '@evidence-dev/db-commons': 1.0.5
       '@evidence-dev/telemetry': 2.1.2(encoding@0.1.13)
