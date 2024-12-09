@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@aws-sdk/client-athena':
         specifier: ^3.575.0
-        version: 3.699.0
+        version: 3.705.0
       '@evidence-dev/db-commons':
         specifier: ^1.0.1
         version: 1.0.1
@@ -60,8 +60,8 @@ packages:
   '@aws-crypto/util@5.2.0':
     resolution: {integrity: sha512-4RkU9EsI6ZpBve5fseQlGNUWKMa1RLPQ1dnjnQoe07ldfIzcsGb5hC5W0Dm7u423KWzawlrpbjXBrXCEv9zazQ==}
 
-  '@aws-sdk/client-athena@3.699.0':
-    resolution: {integrity: sha512-U4QwrdJW/RMpcP4Pu2O3/unt/DdWSLVyTxUVkvYRIMbX/nS2TW7Su6MC6a7yhqfiZ+nzTLxWTkgG689TJn+gxQ==}
+  '@aws-sdk/client-athena@3.705.0':
+    resolution: {integrity: sha512-Vkuw10CM732VC0K+HaAUeNTuJchLuAd+8YZcByXsywIQwaApnvZUfCqSQvT0f+0BeX5C1IM/9hajuM43mhrmSQ==}
     engines: {node: '>=16.0.0'}
 
   '@aws-sdk/client-sso-oidc@3.699.0':
@@ -3748,7 +3748,7 @@ snapshots:
       '@smithy/util-utf8': 2.3.0
       tslib: 2.7.0
 
-  '@aws-sdk/client-athena@3.699.0':
+  '@aws-sdk/client-athena@3.705.0':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
