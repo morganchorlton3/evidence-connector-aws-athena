@@ -96,6 +96,7 @@ const mapAthenaTypeToEvidenceType = column => {
   switch (column.Type) {
     case 'boolean':
       type = EvidenceType.BOOLEAN;
+      break;
     case 'tinyint':
     case 'smallint':
     case 'int':
@@ -105,17 +106,35 @@ const mapAthenaTypeToEvidenceType = column => {
     case 'float':
     case 'real':
       type = EvidenceType.NUMBER;
+      break;
     case 'date':
     case 'timestamp':
       type = EvidenceType.DATE;
+      break;
     case 'string':
     case 'char':
     case 'varchar':
       type = EvidenceType.STRING;
+      break;
+    case 'array':
+      type = EvidenceType.ARRAY;
+      break;
+    case 'map':
+      type = EvidenceType.MAP;
+      break;
+    case 'struct':
+      type = EvidenceType.STRUCT;
+      break;
+    case 'decimal':
+      type = EvidenceType.DECIMAL;
+      break;
+    case 'binary':
+      type = EvidenceType.BINARY;
+      break;
     default:
-      type = EvidenceType.STRING; // Default to string if the type is unknown
+      type = EvidenceType.STRING; // Default to STRING for unrecognized types
   }
-  return { name: column.Name, evidenceType: type, typeFidelity: TypeFidelity.PRECISE }
+  return { name: column.Name, evidenceType: type, typeFidelity: TypeFidelity.PRECISE };
 };
 
 // Function to map query results to the specified format
