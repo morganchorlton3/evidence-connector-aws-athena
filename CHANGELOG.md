@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.2.0...v1.3.0) (2024-12-18)
+
+
+### Features
+
+* support for athena workgroup configuration ([4cbdc03](https://github.com/morganchorlton3/evidence-connector-aws-athena/commit/4cbdc03f4a218eca7bc1fb7f623875d38b5afde0))
+
 # [1.2.0](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.1.2...v1.2.0) (2024-08-13)
 
 
