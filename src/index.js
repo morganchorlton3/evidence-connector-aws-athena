@@ -59,7 +59,7 @@ async function waitForQueryCompletion(queryExecutionId) {
     if (status === 'SUCCEEDED') {
       break;
     } else if (status === 'FAILED' || status === 'CANCELLED') {
-      throw new Error(`Query execution failed or was cancelled: ${queryExecutionId}`);
+      throw new Error(`Query execution failed or was cancelled: ${queryExecutionId}: ${result.QueryExecution.Status.StateChangeReason}`);
     }
 
     // Sleep for a few seconds before checking again
