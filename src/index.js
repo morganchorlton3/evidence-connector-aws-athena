@@ -195,22 +195,19 @@ export const getRunner = (options) => {
       }
     };
 
-    try {
-      const command = new StartQueryExecutionCommand(params);
-      const response = await client.send(command);
-      const queryExecutionId = response.QueryExecutionId;
+    const command = new StartQueryExecutionCommand(params);
+    const response = await client.send(command);
+    const queryExecutionId = response.QueryExecutionId;
 
-      // Wait for query to complete
-      await waitForQueryCompletion(queryExecutionId);
+    // Wait for query to complete
+    await waitForQueryCompletion(queryExecutionId);
 
-      const queryResults = await getQueryResults(queryExecutionId);
+    const queryResults = await getQueryResults(queryExecutionId);
 
-      // Map the query results to the desired format
-      const output = mapQueryResults(queryResults);
-      return output
-    } catch (error) {
-      console.error('Error executing query:', error);
-    }
+    // Map the query results to the desired format
+    const output = mapQueryResults(queryResults);
+    return output
+
   };
 };
 
