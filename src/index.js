@@ -4,7 +4,6 @@
  * @typedef {Object} ConnectorOptions
  * @property {string} database
  * @property {string} catalog
- * @property {string} workgroup
  * @property {string} outputBucket
  * @property {string} testTableName
  */
@@ -28,13 +27,6 @@ export const options = {
     type: "string",
     default: "AWSDataCatalog"
   },
-  workgroup: {
-    title: "workgroup",
-    description:
-      "AWS Athena workgroup to use for the query",
-    type: "string",
-    default: "primary"
-  },
   outputBucket: {
     title: "output_bucket",
     description:
@@ -51,7 +43,7 @@ export const options = {
 
 async function waitForQueryCompletion(queryExecutionId) {
   while (true) {
-
+    
     const command = new GetQueryExecutionCommand({ QueryExecutionId: queryExecutionId });
     const result = await client.send(command);
     const status = result.QueryExecution.Status.State;
@@ -59,7 +51,7 @@ async function waitForQueryCompletion(queryExecutionId) {
     if (status === 'SUCCEEDED') {
       break;
     } else if (status === 'FAILED' || status === 'CANCELLED') {
-      throw new Error(`Query execution failed or was cancelled: ${queryExecutionId}: ${result.QueryExecution.Status.StateChangeReason}`);
+      throw new Error(`Query execution failed or was cancelled: ${queryExecutionId}`);
     }
 
     // Sleep for a few seconds before checking again
@@ -71,7 +63,7 @@ async function getQueryResults(queryExecutionId) {
   const params = {
     QueryExecutionId: queryExecutionId
   };
-
+  
   let allRows = [];
   let nextToken = null;
   let resultSetMetadata = null;
@@ -142,6 +134,7 @@ const mapAthenaTypeToEvidenceType = column => {
     default:
       type = EvidenceType.STRING; // Default to STRING for unrecognized types
   }
+  console.log(column.Name, type)
   return { name: column.Name, evidenceType: type, typeFidelity: TypeFidelity.PRECISE };
 };
 
@@ -159,7 +152,7 @@ function mapQueryResults(queryResults) {
     return mappedRow;
   });
 
-  const columnTypes = columns.map(column => mapAthenaTypeToEvidenceType(column));
+  const columnTypes = columns.map(column =>  mapAthenaTypeToEvidenceType(column));
 
   const output = {
     rows: mappedRows,
@@ -189,25 +182,36 @@ export const getRunner = (options) => {
         Database: options.database,
         Catalog: options.catalog,
       },
-      WorkGroup: options.workgroup,
       ResultConfiguration: {
         OutputLocation: 's3://' + options.outputBucket
       }
     };
 
-    const command = new StartQueryExecutionCommand(params);
-    const response = await client.send(command);
-    const queryExecutionId = response.QueryExecutionId;
+    try {
+      const command = new StartQueryExecutionCommand(params);
+      const response = await client.send(command);
+      const queryExecutionId = response.QueryExecutionId;
 
-    // Wait for query to complete
-    await waitForQueryCompletion(queryExecutionId);
+      // Wait for query to complete
+      await waitForQueryCompletion(queryExecutionId);
 
-    const queryResults = await getQueryResults(queryExecutionId);
+      const queryResults = await getQueryResults(queryExecutionId);
 
-    // Map the query results to the desired format
-    const output = mapQueryResults(queryResults);
-    return output
+      // Map the query results to the desired format
+      const output = mapQueryResults(queryResults);
 
+      for (const row of output.rows) {
+        for (const column of output.columnTypes) {
+					if (column.evidenceType === 'date') {
+						row[column.name] = new Date(row[column.name]);
+					}
+				}
+      }
+
+      return output
+    } catch (error) {
+      console.error('Error executing query:', error);
+    }
   };
 };
 
