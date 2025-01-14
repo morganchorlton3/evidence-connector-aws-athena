@@ -134,7 +134,6 @@ const mapAthenaTypeToEvidenceType = column => {
     default:
       type = EvidenceType.STRING; // Default to STRING for unrecognized types
   }
-  console.log(column.Name, type)
   return { name: column.Name, evidenceType: type, typeFidelity: TypeFidelity.PRECISE };
 };
 
