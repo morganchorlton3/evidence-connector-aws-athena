@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.3.0...v1.3.1) (2025-01-14)
+
+
+### Bug Fixes
+
+* added cast for date columns ([a42a059](https://github.com/morganchorlton3/evidence-connector-aws-athena/commit/a42a0599e01a7bcd157ccd80f2e7c8ac7a095820))
+
 # [1.3.0](https://github.com/morganchorlton3/evidence-connector-aws-athena/compare/v1.2.0...v1.3.0) (2024-12-18)
 
 
