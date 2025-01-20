@@ -20,7 +20,7 @@
     "@semantic-release/git": "^10.0.1",
     "semantic-release": "^24.0.0",
     "typescript": "^5.3.3",
-    "vitest": "^2.0.5"
+    "vitest": "^3.0.2"
   },
   "dependencies": {
     "@aws-sdk/client-athena": "^3.575.0",
